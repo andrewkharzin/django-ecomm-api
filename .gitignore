@@ -1,0 +1,5 @@
+htmlcov
+images
+media
+.vscode
+db.sqlite3
