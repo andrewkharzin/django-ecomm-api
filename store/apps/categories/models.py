@@ -1,8 +1,8 @@
 from uuid import uuid4
+
 from django.db import models
-from uuid import uuid4
-from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 
 # Create your models here.
@@ -13,6 +13,10 @@ class Category(models.Model):
                                    editable=False)
     name = models.CharField(_("Category name"), max_length=255, db_index=True)
     slug = models.SlugField(_("Slug"), max_length=255, unique=True)
+    icon = models.ImageField(upload_to='images/category/icns/%Y/%m/%d',
+                             blank=True)
+    image = models.ImageField(upload_to='images/category/img/%Y/%m/%d',
+                              blank=True)
 
     class Meta:
         verbose_name_plural = 'categories'
