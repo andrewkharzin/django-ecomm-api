@@ -39,11 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',
     'svg',
+    'django_countries',
     # Apps-----------------------/
     'store',
     'store.apps.categories',
     'store.apps.products',
     'store.apps.basket',
+    'store.apps.account',
+    'store.apps.orders',
+    'store.apps.payment',
 ]
 
 MIDDLEWARE = [
@@ -136,7 +140,17 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
+# Basket session ID
+BASKET_SESSION_ID = 'basket'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'account.UserBase'
+LOGIN_REDIRECT_URL = '/account/dashboard'
+LOGIN_URL = '/account/login/'
+
+# Email setting
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

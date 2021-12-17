@@ -1,6 +1,7 @@
 from uuid import uuid4
 
 from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -21,7 +22,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category,
                                  related_name='product',
                                  on_delete=models.CASCADE)
-    created_by = models.ForeignKey(User,
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
                                    on_delete=models.CASCADE,
                                    related_name='product_creator')
     title = models.CharField(_("Product title"), max_length=255)
