@@ -148,6 +148,14 @@ BASKET_SESSION_ID = 'basket'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Stripe Payment
+os.environ.setdefault(
+    'STRIPE_PUBLISHABLE_KEY',
+    'pk_test_51IHxTTJm9Ogh6om63DrCDlFfxcPDTvbUVy1CoSiI1ZS2GKt8UJojUJlbo9CAOCHnNgEqwKlQlnv9TmyzKIUUkr8800w8nNvBfw'
+)
+STRIPE_SECRET_KEY = 'sk_test_51IHxTTJm9Ogh6om6ryBhjePFWUTXvweI5y5gXjFhgPWVztF83X6Rhae1LGfW8bteV5ebb2KhX9w61Q1117Sw1iHE00gzR7PmNq'
+# stripe listen --forward-to localhost:8000/payment/webhook/
+
 AUTH_USER_MODEL = 'account.UserBase'
 LOGIN_REDIRECT_URL = '/account/dashboard'
 LOGIN_URL = '/account/login/'
