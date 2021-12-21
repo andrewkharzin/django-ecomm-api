@@ -3,26 +3,32 @@ from uuid import uuid4
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from mptt.models import MPTTModel, TreeForeignKey
 
+class Category(MPTTModel):
+    """
+    Category Table implimented with MPTT.
+    """
 
-# Create your models here.
-class Category(models.Model):
-    category_id = models.CharField(max_length=16,
-                                   default=uuid4,
-                                   primary_key=True,
-                                   editable=False)
-    name = models.CharField(_("Category name"), max_length=255, db_index=True)
-    slug = models.SlugField(_("Slug"), max_length=255, unique=True)
-    icon = models.ImageField(upload_to='images/category/icns/%Y/%m/%d',
-                             blank=True)
-    image = models.ImageField(upload_to='images/category/img/%Y/%m/%d',
-                              blank=True)
+    name = models.CharField(
+        verbose_name=_("Category Name"),
+        help_text=_("Required and unique"),
+        max_length=255,
+        unique=True,
+    )
+    slug = models.SlugField(verbose_name=_("Category safe URL"), max_length=255, unique=True)
+    parent = TreeForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, related_name="children")
+    is_active = models.BooleanField(default=True)
+
+    class MPTTMeta:
+        order_insertion_by = ["name"]
 
     class Meta:
-        verbose_name_plural = 'categories'
+        verbose_name = _("Category")
+        verbose_name_plural = _("Categories")
 
     def get_absolute_url(self):
-        return reverse('store:category_list', args=[self.slug])
+        return reverse("store:category_list", args=[self.slug])
 
     def __str__(self):
         return self.name
