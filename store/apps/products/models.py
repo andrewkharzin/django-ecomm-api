@@ -84,6 +84,7 @@ class Product(models.Model):
     )
     created_at = models.DateTimeField(_("Created at"), auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(_("Updated at"), auto_now=True)
+    users_wishlist = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="user_wishlist", blank=True)
 
     class Meta:
         ordering = ("-created_at",)
@@ -128,8 +129,8 @@ class ProductImage(models.Model):
     image = models.ImageField(
         verbose_name=_("image"),
         help_text=_("Upload a product image"),
-        upload_to="images/",
-        default="images/default.png",
+        upload_to="images/products/imgs/%Y/%m/%d/",
+        default="images/products/imgs/default_product_image.png",
     )
     alt_text = models.CharField(
         verbose_name=_("Alturnative text"),
